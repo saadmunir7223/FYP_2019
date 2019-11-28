@@ -1,0 +1,85 @@
+﻿@model IEnumerable<SportAholics.ViewModels.SportVm>
+
+@{
+    ViewBag.Title = "Sport List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+    <div class="row">
+    <div class="col-md-12">
+        <a class="btn-sm btn-primary" href="@Url.Action("Create")">Create</a>
+    </div>
+</div>
+<div class="content">
+    <div class="container-fluid">
+        <br />
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card strpied-tabled-with-hover" style="opacity: 0.8;background: rgba(18, 39, 23, 0.2);background-size: cover;border: 1px solid rgba(255, 255, 255, 0.52);">
+                    @*<div class="card-header ">
+                            <h4 class="card-title">Venu</h4>
+                            <p class="card-category">Used For Lookup Venu</p>
+                        </div>*@@*class="table table-hover table-striped" style="font-size:small"*@
+                        <div class="card-body  table-responsive" style="overflow:auto">                            
+                            <table  id="Sportstble" class="display table-bordered dataTable small" style="width:100%;color:#ffffff;">
+                                <thead style="color:rgb(255, 255, 255)">
+                                    <tr>
+                                       
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.SportName)
+                                        </th>
+                                        <th class="text-center">
+                                            @Html.DisplayNameFor(model => model.SportType)
+                                        </th>
+                                        <th class="text-center">
+                                            @Html.DisplayNameFor(model => model.MaxPlayers)
+                                        </th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                           
+                                            <td>
+                                              <img src="@item.urlicons" />  @Html.DisplayFor(modelItem => item.SportName)
+                                            </td>
+                                            <td class="text-center">
+                                               @Html.DisplayFor(modelItem => item.SportType)
+                                            </td>
+                                            <td class="text-center">
+                                                @Html.DisplayFor(modelItem => item.MaxPlayers)
+                                            </td>
+                                            <td>                                               
+                                                <a class="btn-xs btn-primary" href="@Url.Action("Edit", new { id = item.SportID })">Edit</a>
+                                                @Html.ActionLink("Delete", "Delete", new {  id=item.SportID  } ,new { onclick = "return confirm('Are you sure you wish to delete this Sport?');", @class = "btn-xs btn-danger" })
+                                            </td>
+                                        </tr>}
+                                </tbody>
+
+</table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <br />
+            <br />
+        </div>
+    </div>
+<link href="~/Content/datatables.css" rel="stylesheet" />
+@section Scripts {
+    @*@Scripts.Render("~/bundles/jqueryval")*@
+    <script src="~/Scripts/jquery.3.2.1.min.js"></script>
+    <script src="~/Content/datatables.js"></script>
+    <script src="~/Content/datatables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#Sportstble').DataTable();
+        });
+    </script>
+}

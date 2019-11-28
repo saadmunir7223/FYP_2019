@@ -1,0 +1,82 @@
+﻿@model SportAholics.ViewModels.SportVm
+
+@{
+    ViewBag.Title = "Sport Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using (Html.BeginForm("Create", "Sport", FormMethod.Post, new
+{
+    enctype = "multipart/form-data"
+}))
+{
+    @Html.AntiForgeryToken()
+        
+    <div class="form-horizontal">
+        @*style="background-image:url(/GooglMarker/Fifa-Wallpaper-005.jpg); background-repeat: no-repeat;background-size: 100% 100%"*@
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <!------------------------------>
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card" style="opacity: 0.8;background: rgba(18, 39, 23, 0.2);background-size: cover;border: 1px solid rgba(255, 255, 255, 0.52);">
+                            @*<div class="card-header" style="background-color:#1DC7EA">
+                                <h4 class="card-title" style="color:#ffffff">Venue</h4>
+                            </div>*@
+                            <div class="card-body">
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                <div class="row">
+                                    <div class="col-md-4 pr-1">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.SportName)
+                                            @Html.EditorFor(model => model.SportName, new { htmlAttributes = new { @class = "form-control clockpicker " } })
+                                            @Html.ValidationMessageFor(model => model.SportName, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 pr-1">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.SportType)
+                                            @Html.EditorFor(model => model.SportType, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.SportType, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 pr-1">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.MaxPlayers)
+                                            @Html.EditorFor(model => model.MaxPlayers, new { htmlAttributes = new { @class = "form-control", @id = "dateC" } })
+                                            @Html.ValidationMessageFor(model => model.MaxPlayers, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-4 pr-1">
+                                        <div class="form-group">
+                                            <label>Upload Icon</label>
+                                            <input type="file" name="Icons" required /> 
+                                        </div>
+                                    </div>
+                                 </div>  
+                                <div class="row">
+                                    <div class="form-group">
+                                        <sup style="color:#ffffff">Note:-</sup><sup style="color:#ffffff;font-family:Calibri"> GoogleMap Icon Dimensions 22 x 40  Width 22 pixels Hight 40 pixels</sup>
+                                        <br />
+                                    </div>
+                                </div>                              
+                                <div>
+                                    <button type="submit" class="btn-sm btn-info btn-fill pull-right">Create</button>
+                                    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn-sm btn-success btn-fill" })
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

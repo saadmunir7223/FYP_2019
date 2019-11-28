@@ -1,0 +1,69 @@
+﻿@model IEnumerable<SportAholics.ViewModels.EventVm>
+
+@*<link href="~/Content/datatables.css" rel="stylesheet" />*@
+<div class="card strpied-tabled-with-hover" style="opacity: 0.8;background: rgba(18, 39, 23, 0.2);background-size: cover;border: 1px solid rgba(255, 255, 255, 0.52);">
+    
+        <div class="card-body  table-responsive" style="overflow:auto">
+            <table class="display dataTable table-bordered small" style="width:100%; color:#fff; text-align:start" id="upcomingtble">
+                <thead style="color:rgb(255, 255, 255)" >
+                    <tr>
+                     
+                        <th class="text-left">
+                           Event
+                        </th>
+                        <th>
+                            Venue
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Date)
+                        </th>
+                        <th class="text-center">
+                            @Html.DisplayNameFor(model => model.Vacancies)
+                        </th>
+                        <th class="text-center">
+                          Start Time
+                        </th>
+                        <th class="text-center">
+                            End Time
+                        </th>
+                        <th>
+                           Sport
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                           
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Description)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Venue)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Date)
+                            </td>
+                            <td class="text-right">
+                                @Html.DisplayFor(modelItem => item.Vacancies)
+                            </td>
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.StartDateTime)
+                            </td>
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.EndDateTime)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Cate)
+                            </td>
+
+                            <td>
+                                <a class="btn-xs btn-primary" href="javascript:void(0)" onclick="joinevent.init(@item.EventID)">Join</a>
+                        </td>
+                        </tr>}
+                </tbody>
+            </table>
+        </div>
+    </div>

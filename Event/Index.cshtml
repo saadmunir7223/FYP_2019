@@ -1,0 +1,107 @@
+﻿@model IEnumerable<SportAholics.ViewModels.EventVm>
+
+@{
+    ViewBag.Title = "Event List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/datatables.css" rel="stylesheet" />
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card strpied-tabled-with-hover" style="opacity: 0.8;background: rgba(18, 39, 23, 0.2);background-size: cover;border: 1px solid rgba(255, 255, 255, 0.52);">
+
+                    <ul class="nav nav-tabs">
+                        <li class="active btn btn-simple btn-primary"><a data-toggle="tab" href="#eventlist">Events Created by Me</a></li>
+                        <li class="btn btn-simple btn-primary"><a data-toggle="tab" href="#joined">Joined Events</a></li>
+
+                    </ul>
+                    <div class="tab-content">
+                        <div id="eventlist" class="tab-pane active">
+                            <div class="card-body  table-responsive" style="overflow:auto">
+                                <table id="eventtble" class="display table-bordered dataTable small" style="width:100%;color:#ffffff;">
+                                    <thead style="color:#ffffff">
+                                        <tr>
+                                             <th>
+                                              Event  
+                                            </th>
+                                            <th>
+                                                Venue
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.Date)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.Vacancies)
+                                            </th>
+                                            <th>Start Time</th>
+                                            <th>End Time </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.Cate)
+                                            </th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Description)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Venue)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Date)
+                                                </td>
+                                                <td class="text-right">
+                                                    @Html.DisplayFor(modelItem => item.Vacancies)
+                                                </td>
+                                                <td class="text-center">
+                                                    @Html.DisplayFor(modelItem => item.StartDateTime)
+                                                </td>
+                                                <td class="text-center">
+                                                    @Html.DisplayFor(modelItem => item.EndDateTime)
+                                                </td>
+                                                <td class="text-center">
+                                                    @Html.DisplayFor(modelItem => item.Cate)
+                                                </td>
+                                                <td>
+                                                    <a class="btn-xs btn-primary" href="@Url.Action("Edit", new { id = item.EventID })">Edit</a>
+                                                    @Html.ActionLink("Delete", "Delete", new { id = item.EventID }, new { onclick = "return confirm('Are you sure you wish to delete this Event?');", @class = "btn-xs btn-danger" })
+                                                    <a class="btn-xs btn-info" href="@Url.Action("PlayerList", "Player", new { id = item.EventID })">Invite Player</a>
+                                                    <a class="btn-xs btn-primary" href="@Url.Action("PlayerJoined", "Player", new { id = item.EventID })">Joined Players</a>
+                                                </td>
+                                            </tr>}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div id="joined" class="tab-pane fade">
+                            @Html.Action("JoinedEvent")
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @*  @Scripts.Render("~/bundles/jqueryval")*@
+    <script src="~/Scripts/jquery.3.2.1.min.js"></script>
+    <script src="~/Content/datatables.js"></script>
+    <script src="~/Content/datatables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#eventtble').DataTable();
+            $(".tab").click(function () {
+                $(".tab").removeClass("active");
+                // $(".tab").addClass("active"); // instead of this do the below
+                $(this).addClass("active");
+            });
+        });
+    </script>
+}

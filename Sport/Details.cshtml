@@ -1,0 +1,52 @@
+﻿@model IEnumerable<SportAholics.ViewModels.SportVm>
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SportID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SportName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SportType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MaxPlayers)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.SportID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SportName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SportType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MaxPlayers)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,188 @@
+﻿@model SportAholics.ViewModels.EventVm
+
+@{
+    ViewBag.Title = "Create Event";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br />
+@using (Html.BeginForm("Create", "Event", null, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    //style = "background-image:url(/GooglMarker/Fifa-Wallpaper-005.jpg); background-repeat: no-repeat;background-size: 100% 100%"
+
+
+
+    @Html.AntiForgeryToken()
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card" style="opacity: 0.8;background: rgba(18, 39, 23, 0.2);background-size: cover;border: 1px solid rgba(255, 255, 255, 0.52);">
+                        @if (ViewBag.message != null && ViewBag.message != string.Empty)
+                        {
+                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                <strong>Error</strong> @ViewBag.message.
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div> }
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @*</div>*@
+                        <div class="card-body">
+
+                            <div class="row">
+                                <div class="col-md-4 pr-1">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.StartDateTime)
+                                        <div class="input-group input-large timepicker input-daterange" data-date="10/11/2017" data-date-format="mm/dd/yyyy">
+                                            @Html.EditorFor(model => model.StartDateTime, new { htmlAttributes = new { @class = "form-control clockpicker ", @readonly = "readonly" } })
+                                            <span class="field-validation-valid" data-valmsg-for="SystemDateTime" data-valmsg-replace="true"></span>
+                                            <span class="input-group-addon">
+                                                to
+                                            </span>
+                                            @Html.EditorFor(model => model.EndDateTime, new { htmlAttributes = new { @class = "form-control clockpicker ", @readonly = "readonly" } })
+                                            <span class="field-validation-valid" data-valmsg-for="SystemDateTimeTo" data-valmsg-replace="true"></span>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.StartDateTime, "", new { @class = "text-danger" })
+                                        @Html.ValidationMessageFor(model => model.EndDateTime, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-md-4 pr-1">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.VenueID)
+                                        @Html.DropDownListFor(model => model.VenueID, Model.VenueList, "Please select", new { @class = "form-control", @onchange = "fillmapattr()" })
+                                        @Html.ValidationMessageFor(model => model.VenueID, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-md-4 pr-1">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.EventDate)
+                                        @Html.TextBoxFor(model => model.EventDate, new { @class = "form-control", @onchange = "checktimeslot.init()" })
+                                        @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4 pr-1">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Longitude)
+                                        @Html.EditorFor(model => model.Longitude, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                        @Html.ValidationMessageFor(model => model.Longitude, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 pr-1">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Latitude)
+                                        @Html.EditorFor(model => model.Latitude, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                        @Html.ValidationMessageFor(model => model.Latitude, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 pr-1">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Description)
+                                        @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 pr-1">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Status)
+                                        @Html.DropDownList("Status", new List<SelectListItem> { new SelectListItem { Text = "Active", Value = "1" }, new SelectListItem { Text = "Not-Active", Value = "0" } }, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 pr-1">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Vacancies)
+                                        @Html.EditorFor(model => model.Vacancies, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Vacancies, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 pr-1">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Category)
+                                        @Html.DropDownListFor(m => m.Category, Model.CategoryList, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.Category, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                @*<div class="col-md-4 pr-1">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.PlayerID)
+                                        @Html.EditorFor(model => model.PlayerID, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.PlayerID, "", new { @class = "text-danger" })
+                                    </div>
+                                                                    </div>*@
+
+                                <div class="col-md-4 pr-1">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.MaxPlayers)
+                                        @Html.EditorFor(model => model.MaxPlayers, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.MaxPlayers, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn-sm btn-info btn-fill pull-right">Create</button>
+                            <div>
+                                @Html.ActionLink("Back to List", "Index", null, new { @class = "btn-sm btn-success btn-fill" })
+                            </div>
+                            <div class="clearfix"></div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Content/assets/js/plugins/bootstrap-clockpicker.js"></script>
+    <script src="~/Content/assets/js/plugins/date.js"></script>
+    <script src="~/Scripts/googlescript/CheckTimeSlot.js"></script>
+    <script type="text/javascript">
+        $('.clockpicker').clockpicker({
+            placement: 'bottom',
+            align: 'left',
+            autoclose: true,
+            //twelvehour: true
+        });
+    </script>
+    <script>
+        var date = new Date();
+        date.setDate(date.getDate() - 1);
+        $('#EventDate').datepicker({
+            uiLibrary: 'bootstrap4',
+            format: 'dd/mm/yyyy',
+            minDate: date,
+            disabledDates: [new Date()],
+            icons: {
+                rightIcon: '<span class="icons nc-icon  nc-credit-card"></span>'
+            }
+        });
+    </script>
+    <script>
+        function fillmapattr() {
+            var venueid = $('#VenueID').val();
+            $.ajax({
+                url: '/Event/GetVenue',
+                type: "GET",
+                dataType: "JSON",
+                data: { id: venueid },
+                success: function (response) {
+                    document.getElementById('Longitude').value = response.Longitude;
+                    document.getElementById('Latitude').value = response.Latitude;
+                }
+            });
+        }
+    </script>
+}
